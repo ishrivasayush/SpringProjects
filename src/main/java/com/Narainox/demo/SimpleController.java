@@ -2,6 +2,7 @@ package com.Narainox.demo;
 
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,39 +10,50 @@ import java.util.List;
 @RestController
 public class SimpleController {
 
-    @Autowired
-    DbUser dbUser;
+        @Autowired
+        DbUser dbUser;
 
-    @GetMapping("/hi")
-    public String sayHi() {
-        return "Hello Ayush From Our Server!";
-    }
+        @GetMapping("/hi")
+        public String sayHi() {
+            return "Hello Ayush From Our Server!";
+        }
 
-    @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return dbUser.getAllUser();
-    }
+        @GetMapping("/users")
+        public List<User> getAllUsers() {
+            return dbUser.getAllUser();
+        }
 
-    @GetMapping("/users/{id}")
-    public User getUser(@PathVariable int id) {
-        return dbUser.getUser(id);
-    }
+        @GetMapping("/users/{id}")
+        public User getUser(@PathVariable int id) {
+            return dbUser.getUser(id);
+        }
 
-    @DeleteMapping("/user/{id}")
-    public String deleteUser(@PathVariable int id) {
-        return dbUser.deleteUser(id);
-    }
+        @DeleteMapping("/user/{id}")
+        public String deleteUser(@PathVariable int id) {
+            return dbUser.deleteUser(id);
+        }
 
-    @PostMapping("/createUser")
-    public String createUser(@RequestBody User user) {
-        return dbUser.createUser(user);
-    }
+        @PostMapping("/createUser")
+        // @ResponseStatus(HttpStatus.CREATED) by default its return 200.
+        public String createUser(@RequestBody User user) {
+            return dbUser.createUser(user);
+        }
 
-    @GetMapping("/getUserByName")
-    public String getUserbyName(@RequestParam int q) {
-        return dbUser.getUserByName(q);
-    }
+        @GetMapping("/getUserByName")
+        public String getUserbyName(@RequestParam int q) {
+            return dbUser.getUserByName(q);
+        }
+
+        @PutMapping("/updateUser/{id}")
+        public User updateUser(@RequestBody User user,@PathVariable int id)
+        {
+            return dbUser.updateUserById(user,id);
+        }
+
+
+
 }
+
 
     /*
 ## Day-2 ##

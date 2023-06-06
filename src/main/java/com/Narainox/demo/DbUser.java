@@ -57,4 +57,16 @@ public class DbUser {
         }
         return "Not Found";
     }
+
+    public User updateUserById(User user,int id) {
+        for (User u :userList) {
+            if (u.getId()==id)
+            {
+                u=new User(user.getName(), user.getAge());
+                userList.add(id,u);
+                return u;
+            }
+        }
+        return null;
+    }
 }

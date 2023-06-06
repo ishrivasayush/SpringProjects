@@ -23,6 +23,15 @@ public class User {
         return name;
     }
 
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    public User()
+    {
+
+    }
+
     public void setName(String name) {
         this.name = name;
     }
