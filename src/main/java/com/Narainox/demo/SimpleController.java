@@ -1,10 +1,14 @@
 package com.Narainox.demo;
 
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -13,7 +17,8 @@ public class SimpleController {
         @Autowired
         DbUser dbUser;
 
-        @GetMapping("/hi")
+        @RequestMapping(path = "/hii", method = RequestMethod.GET,consumes = "application/json",produces = "application/json")
+//        @GetMapping("/hi")
         public String sayHi() {
             return "Hello Ayush From Our Server!";
         }
@@ -24,8 +29,13 @@ public class SimpleController {
         }
 
         @GetMapping("/users/{id}")
-        public User getUser(@PathVariable int id) {
-            return dbUser.getUser(id);
+        public ResponseEntity<User> getUser(@PathVariable int id) {
+            User user= dbUser.getUser(id);
+            MultiValueMap<String,String> headers=new LinkedMultiValueMap<>();
+            headers.put("server", Collections.singletonList("CodeOfAyush"));
+            HttpStatus status=HttpStatus.CREATED;
+            ResponseEntity<User> responseEntity=new ResponseEntity<User>(user,headers,status);
+            return responseEntity;
         }
 
         @DeleteMapping("/user/{id}")
@@ -95,6 +105,11 @@ Parameters
 users/ayush --> Path Parameter
 search?q=Ayush ---> query Parameter----->RequestPARAM
 
+HTTP Status Code
+4XX- ISSUE with client Bad API
+2XX- Fine
+5XX- issue with server
+3XX- ITS fine but server not responds with client.
 
 
 
